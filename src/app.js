@@ -1,29 +1,37 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const { testConnection } = require('./config/database');
 const pengirimanRoutes = require('./routes/pengirimanRoutes');
-const sampahElektronikRoutes = require('./routes/sampahElektronikRoutes');
+const apiKeyRoutes = require('./routes/apiKeyRoutes');
 const { logger, checkApiKey, errorHandler } = require('./middleware/apiMiddleware');
+const penjemputanRoutes = require('./routes/penjemputanRoutes');
 
 const app = express();
 
-// Middleware
+// Test database connection
+testConnection();
+
 app.use(cors());
 app.use(express.json());
 app.use(logger);
 
-// Gunakan checkApiKey untuk semua rute API
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Route untuk mengelola API key tidak memerlukan autentikasi
+app.use('/api/keys', apiKeyRoutes);
+
+// Semua route lain memerlukan API key
 app.use('/api', checkApiKey);
-
-// Routes
 app.use('/api', pengirimanRoutes);
-app.use('/api', sampahElektronikRoutes);
+app.use('/api', penjemputanRoutes);
 
-// 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Not Found' });
 });
 
-// Error handler
 app.use(errorHandler);
 
 module.exports = app;

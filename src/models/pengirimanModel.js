@@ -1,3 +1,5 @@
+const { pool } = require('../config/database');
+
 class Pengiriman {
   constructor(id, status, lokasi, barcode) {
     this.id = id;
@@ -9,48 +11,51 @@ class Pengiriman {
   }
 }
 
-class PengirimanModel {
+class PengirimanModel { 
   constructor() {
     this.pengiriman = {};
     this.counter = 1;
   }
 
-  generateId() {
-    const id = `SMPH${this.counter.toString().padStart(6, '0')}`;
-    this.counter++;
-    return id;
+  async generateId() {
+    const [rows] = await pool.query('SELECT MAX(CAST(SUBSTRING(id, 5) AS UNSIGNED)) as max_id FROM pengiriman');
+    const maxId = rows[0].max_id || 0;
+    return `SMPH${(maxId + 1).toString().padStart(6, '0')}`;
   }
 
-  tambahPengiriman(status, lokasi, barcode) {
-    const id = this.generateId();
-    this.pengiriman[id] = new Pengiriman(id, status, lokasi, barcode);
-    return this.pengiriman[id];
+  async tambahPengiriman(status, lokasi, barcode) {
+    const id = await this.generateId();
+    const [result] = await pool.query(
+      'INSERT INTO pengiriman (id, status, lokasi, barcode) VALUES (?, ?, ?, ?)',
+      [id, status, lokasi, barcode]
+    );
+    return this.getPengiriman(id);
   }
 
-  getPengiriman(id) {
-    return this.pengiriman[id];
+  async getPengiriman(id) {
+    const [rows] = await pool.query('SELECT * FROM pengiriman WHERE id = ?', [id]);
+    return rows[0];
   }
 
-  getAllPengiriman() {
-    return Object.values(this.pengiriman);
+  async getAllPengiriman() {
+    const [rows] = await pool.query('SELECT * FROM pengiriman');
+    return rows;
   }
 
-  updatePengiriman(id, status, lokasi) {
-    if (this.pengiriman[id]) {
-      this.pengiriman[id].status = status;
-      this.pengiriman[id].lokasi = lokasi;
-      this.pengiriman[id].tanggalDiperbarui = new Date();
-      return this.pengiriman[id];
+  async updatePengiriman(id, status, lokasi) {
+    const [result] = await pool.query(
+      'UPDATE pengiriman SET status = ?, lokasi = ? WHERE id = ?',
+      [status, lokasi, id]
+    );
+    if (result.affectedRows === 0) {
+      return null;
     }
-    return null;
+    return this.getPengiriman(id);
   }
 
-  deletePengiriman(id) {
-    if (this.pengiriman[id]) {
-      delete this.pengiriman[id];
-      return true;
-    }
-    return false;
+  async deletePengiriman(id) {
+    const [result] = await pool.query('DELETE FROM pengiriman WHERE id = ?', [id]);
+    return result.affectedRows > 0;
   }
 }
 
