@@ -11,5 +11,6 @@ router.get('/pengiriman', asyncHandler(pengirimanController.getAllPengiriman));
 router.get('/pengiriman/:id', asyncHandler(pengirimanController.getPengiriman));
 router.put('/pengiriman/:id', asyncHandler(pengirimanController.updatePengiriman));
 router.delete('/pengiriman/:id', asyncHandler(pengirimanController.deletePengiriman));
+router.get('/pengiriman/:id/barcode', pengirimanController.getBarcodeImage);
 
 module.exports = router;  // Pastikan ini ada

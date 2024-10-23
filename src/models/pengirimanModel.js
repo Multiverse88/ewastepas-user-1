@@ -1,8 +1,9 @@
 class Pengiriman {
-  constructor(id, status, lokasi) {
+  constructor(id, status, lokasi, barcode) {
     this.id = id;
     this.status = status;
     this.lokasi = lokasi;
+    this.barcode = barcode;
     this.tanggalDibuat = new Date();
     this.tanggalDiperbarui = new Date();
   }
@@ -11,10 +12,18 @@ class Pengiriman {
 class PengirimanModel {
   constructor() {
     this.pengiriman = {};
+    this.counter = 1;
   }
 
-  tambahPengiriman(id, status, lokasi) {
-    this.pengiriman[id] = new Pengiriman(id, status, lokasi);
+  generateId() {
+    const id = `SMPH${this.counter.toString().padStart(6, '0')}`;
+    this.counter++;
+    return id;
+  }
+
+  tambahPengiriman(status, lokasi, barcode) {
+    const id = this.generateId();
+    this.pengiriman[id] = new Pengiriman(id, status, lokasi, barcode);
     return this.pengiriman[id];
   }
 
@@ -46,4 +55,3 @@ class PengirimanModel {
 }
 
 module.exports = new PengirimanModel();
-

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lihat Barcode</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #barcodeImage { max-width: 100%; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Lihat Barcode</h1>
+    <input type="text" id="barcodeInput" placeholder="Masukkan string base64 barcode">
+    <button onclick="tampilkanBarcode()">Tampilkan Barcode</button>
+    <br>
+    <img id="barcodeImage" alt="Barcode akan muncul di sini">
+
+    <script>
+        function tampilkanBarcode() {
+            const base64String = document.getElementById('barcodeInput').value;
+            const barcodeImage = document.getElementById('barcodeImage');
+            barcodeImage.src = `data:image/png;base64,${base64String}`;
+        }
+    </script>
+</body>
+</html>
