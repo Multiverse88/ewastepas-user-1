@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const pengirimanRoutes = require('./routes/pengirimanRoutes');
-const sampahElektronikRoutes = require('./routes/sampahElektronikRoutes');
+const jenisSampahRoutes = require('./routes/jenisSampahRoutes');
+const kategoriSampahRoutes = require('./routes/kategoriSampahRoutes');
 const { logger, checkApiKey, errorHandler } = require('./middleware/apiMiddleware');
 
 const app = express();
@@ -16,7 +17,8 @@ app.use('/api', checkApiKey);
 
 // Routes
 app.use('/api', pengirimanRoutes);
-app.use('/api', sampahElektronikRoutes);
+app.use('/api', jenisSampahRoutes);
+app.use('/api', kategoriSampahRoutes);
 
 // 404 handler
 app.use((req, res) => {
