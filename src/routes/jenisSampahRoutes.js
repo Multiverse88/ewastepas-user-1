@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const jenisSampahController = require('../controllers/jenisSampahController');
+const jenisSampahController = require('../controllers/jenisSampahController'); // Pastikan ini benar
 
-router.get('/jenis-sampah', jenisSampahController.getAllJenis);
-router.post('/jenis-sampah', jenisSampahController.tambahJenis);
+router.post('/jenis-sampah', jenisSampahController.tambahJenisSampah);
+router.get('/jenis-sampah', jenisSampahController.getAllJenisSampah); // Pastikan ini juga benar
 
 module.exports = router;

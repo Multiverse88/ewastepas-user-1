@@ -1,19 +1,26 @@
 const jenisSampahModel = require('../models/jenisSampahModel');
 
 class JenisSampahController {
-  getAllJenis(req, res) {
-    const jenis = jenisSampahModel.getAllJenisSampah();
-    res.json({ data: jenis });
+  async getAllJenisSampah(req, res) {
+    try {
+      const jenisSampah = await jenisSampahModel.getAllJenisSampah();
+      res.json({ data: jenisSampah });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
 
-  tambahJenis(req, res) {
-    const { id, nama, deskripsi, gambar } = req.body;
-    if (!id || !nama || !deskripsi || !gambar) {
-      return res.status(400).json({ error: 'Semua field harus diisi' });
+  async tambahJenisSampah(req, res) {
+    const { namaJenis } = req.body;
+    try {
+      const jenisSampah = await jenisSampahModel.tambahJenisSampah(namaJenis);
+      res.status(201).json({ message: 'Jenis sampah berhasil ditambahkan', data: jenisSampah });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
-    const jenis = jenisSampahModel.tambahJenisSampah(id, nama, deskripsi, gambar);
-    res.status(201).json({ message: 'Jenis sampah berhasil ditambahkan', data: jenis });
   }
+
+  // Tambahkan metode lain sesuai kebutuhan
 }
 
 module.exports = new JenisSampahController();

@@ -1,10 +1,10 @@
 const mysql = require('mysql2/promise');
 
 const dbConfig = {
-  host: process.env.DB_HOST || '34.57.36.146/phpmyadmin/',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'password_baru_anda',
-  database: process.env.DB_NAME || 'hikel_lila',
+  host: process.env.DB_HOST || 'localhost', // Pastikan ini adalah 'localhost'
+  user: process.env.DB_USER || 'root', // Sesuaikan dengan username MySQL Anda
+  password: process.env.DB_PASSWORD || '', // Sesuaikan dengan password MySQL Anda
+  database: process.env.DB_NAME || 'haikalkntl', // Pastikan nama database ini benar
   connectionLimit: 10
 };
 
@@ -24,4 +24,3 @@ module.exports = {
   pool,
   testConnection
 };
-
