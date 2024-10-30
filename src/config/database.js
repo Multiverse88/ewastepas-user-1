@@ -1,10 +1,10 @@
 const mysql = require('mysql2/promise');
 
 const dbConfig = {
-  host: process.env.DB_HOST || 'localhost', // Pastikan ini adalah 'localhost'
-  user: process.env.DB_USER || 'root', // Sesuaikan dengan username MySQL Anda
-  password: process.env.DB_PASSWORD || '', // Sesuaikan dengan password MySQL Anda
-  database: process.env.DB_NAME || 'haikalkntl', // Pastikan nama database ini benar
+  host: process.env.DB_HOST || '34.57.36.146', // Pastikan ini adalah 'localhost'
+  user: process.env.DB_USER || 'haikal', // Sesuaikan dengan username MySQL Anda
+  password: process.env.DB_PASSWORD || 'My$ecureP@ssw0rd123', // Sesuaikan dengan password MySQL Anda
+  database: process.env.DB_NAME || 'hikel_lila', // Pastikan nama database ini benar
   connectionLimit: 10
 };
 
