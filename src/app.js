@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const { testConnection } = require('./config/database');
 const sampahRoutes = require('./routes/sampahRoutes');
-const jenisSampahRoutes = require('./routes/jenisSampahRoutes');
+const wasteTypeRoutes = require('./routes/wasteTypeRoutes');
 const pengirimanRoutes = require('./routes/pengirimanRoutes');
 const { logger, checkApiKey, errorHandler } = require('./middleware/apiMiddleware');
 const penjemputanRoutes = require('./routes/penjemputanRoutes');
@@ -28,7 +28,7 @@ app.use('/api/keys', apiKeyRoutes);
 // Semua route lain memerlukan API key
 app.use('/api', checkApiKey);
 app.use('/api', pengirimanRoutes);
-app.use('/api', jenisSampahRoutes);
+app.use('/api', wasteTypeRoutes);
 app.use('/api', penjemputanRoutes);
 app.use('/api', sampahRoutes);
 
