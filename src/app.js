@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const { testConnection } = require('./config/database');
-const sampahRoutes = require('./routes/sampahRoutes');
+const wasteRoutes = require('./routes/wasteRoutes');
 const wasteTypeRoutes = require('./routes/wasteTypeRoutes');
 const pengirimanRoutes = require('./routes/pengirimanRoutes');
 const { logger, checkApiKey, errorHandler } = require('./middleware/apiMiddleware');
@@ -30,7 +30,7 @@ app.use('/api', checkApiKey);
 app.use('/api', pengirimanRoutes);
 app.use('/api', wasteTypeRoutes);
 app.use('/api', penjemputanRoutes);
-app.use('/api', sampahRoutes);
+app.use('/api', wasteRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Not Found' });
