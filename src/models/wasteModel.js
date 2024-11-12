@@ -7,11 +7,11 @@ class WasteModel {
     return `WST_${count.toString().padStart(2, '0')}`;
   }
 
-  async tambahWaste(wasteName, point, wasteTypeId, image, description) {
+  async tambahWaste(wasteName, point, wasteTypeId, image) {
     const wasteId = await this.generateId();
     const [result] = await pool.query(
-      'INSERT INTO waste (waste_id, waste_name, point, waste_type_id, image, description, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())',
-      [wasteId, wasteName, point, wasteTypeId, image, description]
+      'INSERT INTO waste (waste_id, waste_name, point, waste_type_id, image, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())',
+      [wasteId, wasteName, point, wasteTypeId, image]
     );
     return this.getWaste(wasteId);
   }
