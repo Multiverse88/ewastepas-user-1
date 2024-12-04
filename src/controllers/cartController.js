@@ -1,71 +1,45 @@
-// src/controllers/cartController.js
 const CartModel = require('../models/cartModel');
 
-exports.addItemToCart = async (req, res) => {
-    const { waste_id, quantity } = req.body;
-    try {
-        const waste = await CartModel.getWaste(waste_id);
-        if (!waste) {
-            return res.status(404).json({ error: 'Waste not found' });
-        }
-        await CartModel.addItem(waste_id, quantity);
-        res.status(201).json({ message: 'Item added to cart', waste_id, quantity });
-    } catch (error) {
-        console.error('Database error:', error);
-        res.status(500).json({ error: 'Database error', details: error.message });
-    }
+exports.addItem = async (req, res) => {
+  const { pickup_id, waste_id, quantity } = req.body;
+
+  try {
+    const item = await CartModel.addItem(pickup_id, waste_id, quantity);
+    res.status(201).json(item);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-exports.increaseCartItemQuantity = async (req, res) => {
-    const { pickup_id, quantity } = req.body; // quantity harus positif
-    try {
-        const item = await CartModel.getItem(pickup_id);
-        if (!item) {
-            return res.status(404).json({ error: 'Item not found in cart' });
-        }
+exports.decreaseItem = async (req, res) => {
+  const { pickup_id, waste_id, quantity } = req.body;
 
-        const newQuantity = item.quantity + quantity; // Menghitung jumlah baru
-        await CartModel.updateItemQuantity(pickup_id, newQuantity);
-        res.status(200).json({ message: 'Item quantity increased', pickup_id, quantity: newQuantity });
-    } catch (error) {
-        console.error('Database error:', error);
-        res.status(500).json({ error: 'Database error', details: error.message });
-    }
+  try {
+    const item = await CartModel.decreaseItem(pickup_id, waste_id, quantity);
+    res.status(200).json(item);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-exports.decreaseCartItemQuantity = async (req, res) => {
-    const { pickup_id, quantity } = req.body; // quantity harus positif
-    try {
-        const item = await CartModel.getItem(pickup_id);
-        if (!item) {
-            return res.status(404).json({ error: 'Item not found in cart' });
-        }
+exports.viewCart = async (req, res) => {
+  const { pickup_id } = req.params;
 
-        const newQuantity = item.quantity - quantity; // Menghitung jumlah baru
-
-        if (newQuantity < 0) {
-            return res.status(400).json({ error: 'Quantity cannot be negative' });
-        }
-
-        await CartModel.updateItemQuantity(pickup_id, newQuantity);
-        res.status(200).json({ message: 'Item quantity decreased', pickup_id, quantity: newQuantity });
-    } catch (error) {
-        console.error('Database error:', error);
-        res.status(500).json({ error: 'Database error', details: error.message });
-    }
+  try {
+    const items = await CartModel.getAllItems(pickup_id);
+    res.status(200).json(items);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-exports.removeItemFromCart = async (req, res) => {
-    const { pickup_id } = req.body;
-    try {
-        const item = await CartModel.getItem(pickup_id);
-        if (!item) {
-            return res.status(404).json({ error: 'Item not found in cart' });
-        }
-        await CartModel.removeItem(pickup_id);
-        res.status(200).json({ message: 'Item removed from cart', pickup_id });
-    } catch (error) {
-        console.error('Database error:', error);
-        res.status(500).json({ error: 'Database error', details: error.message });
-    }
+exports.deleteItem = async (req, res) => {
+  const { pickup_id, waste_id } = req.body;
+
+  try {
+    const response = await CartModel.deleteItem(pickup_id, waste_id);
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };

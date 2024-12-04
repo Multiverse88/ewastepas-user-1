@@ -1,15 +1,10 @@
 const express = require('express');
+const cart1Controller = require('../controllers/cartController');
 const router = express.Router();
-const { addItemToCart, increaseCartItemQuantity, decreaseCartItemQuantity, removeItemFromCart } = require('../controllers/cartController');
-const { getPickupInfo, schedulePickup } = require('../controllers/pickupController');
 
+router.post('/add', cart1Controller.addItem);
+router.post('/decrease', cart1Controller.decreaseItem);
+router.get('/view/:pickup_id', cart1Controller.viewCart);
+router.delete('/delete', cart1Controller.deleteItem);
 
-
-router.post('/add', addItemToCart);
-router.put('/increase-quantity', increaseCartItemQuantity); // Endpoint untuk menambah jumlah
-router.put('/decrease-quantity', decreaseCartItemQuantity); // Endpoint untuk mengurangi jumlah
-router.delete('/remove', removeItemFromCart); // Endpoint untuk menghapus item
-router.get('/pickup-info', getPickupInfo);
-router.put('/pickup/schedule', schedulePickup);
-
-module.exports = router; 
+module.exports = router;
