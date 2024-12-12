@@ -13,6 +13,9 @@ const cartRoutes = require('./routes/cartRoutes');
 const authRoutes = require('./routes/authRoutes');
 const app = express();
 
+// Tambahkan ini sebelum middleware lainnya
+app.set('trust proxy', 1); // Penting! Tambahkan ini untuk Vercel
+
 // Test database connection
 testConnection();
 

@@ -26,6 +26,7 @@ const registerLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  trustProxy: true,
 });
 
 // Rate limiter untuk login
@@ -38,6 +39,7 @@ const loginLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  trustProxy: true,
 });
 
 // Middleware untuk logging requests
