@@ -60,6 +60,15 @@ const errorHandler = (err, req, res, next) => {
 // Terapkan middleware logging untuk semua routes
 router.use(logRequest);
 
+// Aplikasikan rate limiter
+router.use(rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 menit
+  max: 100, // Limit setiap IP ke 100 request per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+  trustProxy: true
+}));
+
 // Routes untuk autentikasi
 router.post('/register', registerLimiter, async (req, res, next) => {
   try {
