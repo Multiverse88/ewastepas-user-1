@@ -1,102 +1,47 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const winston = require('winston');
+const { logger } = require('./apiMiddleware');
 
-// Konfigurasi logger
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' }),
-  ],
-});
+// Gunakan direktori temporary sistem
+const uploadDir = '/tmp';
 
-// Membuat direktori uploads jika belum ada
-const uploadDir = 'uploads';
+// Pastikan direktori temporary ada
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Konfigurasi penyimpanan
+// Konfigurasi storage untuk multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadDir);
   },
   filename: function (req, file, cb) {
-    // Membuat nama file yang unik dengan timestamp
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
   }
 });
 
-// Filter file yang diizinkan
+// Filter file
 const fileFilter = (req, file, cb) => {
-  // Daftar mime type yang diizinkan
-  const allowedMimes = [
-    'image/jpeg',
-    'image/jpg',
-    'image/png',
-    'image/gif'
-  ];
-
-  if (allowedMimes.includes(file.mimetype)) {
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Format file tidak didukung. Gunakan format JPG, JPEG, PNG, atau GIF.'), false);
+    cb(new Error('Invalid file type. Only JPEG, PNG and GIF are allowed.'), false);
   }
 };
 
-// Konfigurasi multer
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024, // Maksimal 5MB
+    fileSize: 5 * 1024 * 1024 // 5MB limit
   }
 });
 
-// Middleware error handling untuk multer
-const handleUpload = (req, res, next) => {
-  const uploadSingle = upload.single('photo');
-
-  uploadSingle(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      // Error dari multer
-      logger.error(`Multer error: ${err.message}`);
-      if (err.code === 'LIMIT_FILE_SIZE') {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Ukuran file terlalu besar. Maksimal 5MB.'
-        });
-      }
-      return res.status(400).json({
-        status: 'error',
-        message: 'Error saat upload file.'
-      });
-    } else if (err) {
-      // Error custom dari fileFilter
-      logger.error(`Upload error: ${err.message}`);
-      return res.status(400).json({
-        status: 'error',
-        message: err.message
-      });
-    }
-    
-    // Jika tidak ada file yang diupload
-    if (!req.file) {
-      logger.info('Tidak ada file yang diupload');
-      return res.status(400).json({
-        status: 'error',
-        message: 'Silakan pilih file untuk diupload.'
-      });
-    }
-
-    logger.info(`File berhasil diupload: ${req.file.filename}`);
-    next();
-  });
-};
+// Middleware untuk menangani upload
+const handleUpload = upload.single('image');
 
 // Fungsi untuk menghapus file
 const deleteFile = (filePath) => {
