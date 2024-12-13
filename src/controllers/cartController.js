@@ -1,10 +1,33 @@
 const CartModel = require('../models/cartModel');
+const WasteModel = require('../models/wasteModel');
 
 exports.addItem = async (req, res) => {
-  const { pickup_id, waste_id, quantity } = req.body;
+  const { waste_id, quantity } = req.body;
+
+  if (!req.user) {
+    return res.status(401).json({ message: 'User belum login. Silakan login terlebih dahulu.' });
+  }
+
+  const waste = await WasteModel.getWaste(waste_id);
+  if (!waste) {
+    return res.status(400).json({ message: 'Waste ID tidak valid. Silakan pilih waste yang ada.' });
+  }
+
+  const community_id = req.user.id;
+  const pickup_date = new Date().toISOString().slice(0, 10);
+  const pickup_address = "Default Address";
 
   try {
-    const item = await CartModel.addItem(pickup_id, waste_id, quantity);
+    const pickupResult = await CartModel.getPickupId(community_id);
+    let pickup_id;
+
+    if (pickupResult.length > 0) {
+      pickup_id = pickupResult[0].pickup_id;
+    } else {
+      return res.status(400).json({ message: 'Tidak ada pickup_id yang tersedia. Silakan buat pickup terlebih dahulu.' });
+    }
+
+    const item = await CartModel.addItem(pickup_id, waste_id, quantity, community_id, pickup_date, pickup_address);
     res.status(201).json(item);
   } catch (error) {
     res.status(500).json({ message: error.message });

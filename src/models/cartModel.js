@@ -2,11 +2,29 @@ const { pool } = require('../config/database');
 const WasteModel = require('./wasteModel');  // Pastikan jalur impor benar
 
 class CartModel {
+  // Mendapatkan pickup_id berdasarkan community_id
+  async getPickupId(community_id) {
+    const [rows] = await pool.query('SELECT pickup_id FROM pickup_waste WHERE community_id = ?', [community_id]);
+    return rows;
+  }
+
+  // Membuat entri baru di pickup_waste
+  async createPickup(community_id, pickup_date, pickup_address) {
+    const [result] = await pool.query(
+      'INSERT INTO pickup_waste (community_id, pickup_date, pickup_address, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())',
+      [community_id, pickup_date, pickup_address]
+    );
+    return result;
+  }
+
   // Menambahkan item ke keranjang
-  async addItem(pickup_id, waste_id, quantity) {
+  async addItem(pickup_id, waste_id, quantity, community_id, pickup_date, pickup_address) {
     try {
       // Cek apakah item sudah ada di keranjang
-      const [rows] = await pool.query('SELECT * FROM pickup_detail WHERE pickup_id = ? AND waste_id = ?', [pickup_id, waste_id]);
+      const [rows] = await pool.query(
+        'SELECT * FROM pickup_detail WHERE pickup_id = ? AND waste_id = ?',
+        [pickup_id, waste_id]
+      );
 
       if (rows.length > 0) {
         // Jika item sudah ada, update quantity dan points
@@ -17,19 +35,31 @@ class CartModel {
         const newQuantity = item.quantity + quantity;
         const newPoints = item.points + points * quantity;
 
-        await pool.query('UPDATE pickup_detail SET quantity = ?, points = ? WHERE pickup_id = ? AND waste_id = ?', [newQuantity, newPoints, pickup_id, waste_id]);
+        await pool.query(
+          'UPDATE pickup_detail SET quantity = ?, points = ? WHERE pickup_id = ? AND waste_id = ?',
+          [newQuantity, newPoints, pickup_id, waste_id]
+        );
         return this.getItem(pickup_id, waste_id);
       } else {
         // Jika item belum ada, tambahkan item baru
         const waste = await WasteModel.getWaste(waste_id);  // Menggunakan metode getWaste dari WasteModel
         const points = waste.point;
 
-        await pool.query('INSERT INTO pickup_detail (pickup_id, waste_id, quantity, points) VALUES (?, ?, ?, ?)', [pickup_id, waste_id, quantity, points * quantity]);
+        await pool.query(
+          'INSERT INTO pickup_detail (pickup_id, waste_id, quantity, points) VALUES (?, ?, ?, ?)',
+          [pickup_id, waste_id, quantity, points * quantity]
+        );
         return this.getItem(pickup_id, waste_id);
       }
     } catch (error) {
       throw error;
     }
+  }
+
+  // Mendapatkan item dari keranjang
+  async getItem(pickup_id, waste_id) {
+    const [rows] = await pool.query('SELECT * FROM pickup_detail WHERE pickup_id = ? AND waste_id = ?', [pickup_id, waste_id]);
+    return rows[0];
   }
 
   // Mengurangi item dari keranjang
@@ -58,12 +88,6 @@ class CartModel {
     } catch (error) {
       throw error;
     }
-  }
-
-  // Mengambil item tertentu berdasarkan pickup_id dan waste_id
-  async getItem(pickup_id, waste_id) {
-    const [rows] = await pool.query('SELECT * FROM pickup_detail WHERE pickup_id = ? AND waste_id = ?', [pickup_id, waste_id]);
-    return rows[0];
   }
 
   // Mengambil semua item dalam keranjang berdasarkan pickup_id
