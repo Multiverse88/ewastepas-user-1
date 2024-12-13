@@ -66,3 +66,19 @@ exports.deleteItem = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getPickupId = async (req, res) => {
+    const community_id = req.user.id; // Ambil community_id dari user yang sudah login
+
+    try {
+        const pickupResult = await CartModel.getPickupId(community_id);
+        
+        if (pickupResult.length > 0) {
+            return res.status(200).json({ pickup_id: pickupResult[0].pickup_id });
+        } else {
+            return res.status(404).json({ message: 'Pickup ID tidak ditemukan.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
