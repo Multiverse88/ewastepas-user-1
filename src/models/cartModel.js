@@ -1,5 +1,5 @@
 const { pool } = require('../config/database');
-const WasteModel = require('./wasteModel');  // Pastikan jalur impor benar
+const WasteModel = require('./wasteModel');
 
 class CartModel {
   // Mendapatkan pickup_id berdasarkan community_id
@@ -8,17 +8,8 @@ class CartModel {
     return rows;
   }
 
-  // Membuat entri baru di pickup_waste
-  async createPickup(community_id, pickup_date, pickup_address) {
-    const [result] = await pool.query(
-      'INSERT INTO pickup_waste (community_id, pickup_date, pickup_address, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())',
-      [community_id, pickup_date, pickup_address]
-    );
-    return result;
-  }
-
   // Menambahkan item ke keranjang
-  async addItem(pickup_id, waste_id, quantity, community_id, pickup_date, pickup_address) {
+  async addItem(pickup_id, waste_id, quantity, community_id) {
     try {
       // Cek apakah item sudah ada di keranjang
       const [rows] = await pool.query(
@@ -29,7 +20,7 @@ class CartModel {
       if (rows.length > 0) {
         // Jika item sudah ada, update quantity dan points
         const item = rows[0];
-        const waste = await WasteModel.getWaste(waste_id);  // Menggunakan metode getWaste dari WasteModel
+        const waste = await WasteModel.getWaste(waste_id);
         const points = waste.point;
 
         const newQuantity = item.quantity + quantity;
@@ -42,7 +33,7 @@ class CartModel {
         return this.getItem(pickup_id, waste_id);
       } else {
         // Jika item belum ada, tambahkan item baru
-        const waste = await WasteModel.getWaste(waste_id);  // Menggunakan metode getWaste dari WasteModel
+        const waste = await WasteModel.getWaste(waste_id);
         const points = waste.point;
 
         await pool.query(
@@ -69,7 +60,7 @@ class CartModel {
 
       if (rows.length > 0) {
         const item = rows[0];
-        const waste = await WasteModel.getWaste(waste_id);  // Menggunakan metode getWaste dari WasteModel
+        const waste = await WasteModel.getWaste(waste_id);
         const points = waste.point;
 
         let newQuantity = item.quantity - quantity;
