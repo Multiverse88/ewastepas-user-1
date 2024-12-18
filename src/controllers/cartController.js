@@ -1,5 +1,6 @@
 const CartModel = require('../models/cartModel');
 const WasteModel = require('../models/wasteModel');
+const { pool } = require('../config/database');
 
 exports.addItem = async (req, res) => {
   const { waste_id, quantity } = req.body;
@@ -103,6 +104,7 @@ exports.deleteItem = async (req, res) => {
       return res.status(404).json({ message: 'Pickup ID tidak ditemukan.' });
     }
   } catch (error) {
+    console.error('Error in deleteItem:', error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -118,6 +120,71 @@ exports.getPickupId = async (req, res) => {
     } else {
       return res.status(404).json({ message: 'Pickup ID tidak ditemukan.' });
     }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getCheckoutDetails = async (req, res) => {
+  const community_id = req.user.id; // Ambil community_id dari pengguna yang login
+
+  try {
+    // Ambil alamat dari tabel community
+    const [user] = await pool.query('SELECT address FROM community WHERE community_id = ?', [community_id]);
+    if (!user.length) {
+      return res.status(404).json({ message: 'User tidak ditemukan' });
+    }
+
+    const address = user[0].address;
+
+    // Ambil pickup_id berdasarkan community_id
+    const pickupResult = await CartModel.getPickupId(community_id);
+    if (pickupResult.length === 0) {
+      return res.status(404).json({ message: 'Pickup ID tidak ditemukan' });
+    }
+
+    const pickup_id = pickupResult[0].pickup_id;
+    const items = await CartModel.getAllItems(pickup_id);
+
+    // Hitung total E-Waste dan total points
+    const totalEWaste = items.length;
+    const totalPoints = items.reduce((acc, item) => acc + item.points, 0);
+
+    res.status(200).json({
+      address,
+      items,
+      totalEWaste,
+      totalPoints,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.schedulePickup = async (req, res) => {
+  const { pickupDate, pickupTime } = req.body; // Ambil tanggal dan waktu dari request
+  const community_id = req.user.id;
+
+  try {
+    // Ambil alamat dari tabel community
+    const [user] = await pool.query('SELECT address FROM community WHERE community_id = ?', [community_id]);
+    if (!user.length) {
+      return res.status(404).json({ message: 'User tidak ditemukan' });
+    }
+
+    const pickupAddress = user[0].address;
+
+    // Update jadwal penjemputan di tabel pickup_waste
+    const [result] = await pool.query(
+      'UPDATE pickup_waste SET pickup_date = ?, pickup_time = ?, pickup_address = ? WHERE community_id = ?',
+      [pickupDate, pickupTime, pickupAddress, community_id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Jadwal penjemputan tidak ditemukan' });
+    }
+
+    res.status(200).json({ message: 'Jadwal penjemputan berhasil diperbarui' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

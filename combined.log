@@ -61,3 +61,16 @@
 {"level":"info","message":"POST /api/auth/login - IP: ::1"}
 {"level":"info","message":"Login berhasil"}
 {"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"error","message":"Error pada autentikasi: read ECONNRESET"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"info","message":"Login berhasil"}
+{"level":"info","message":"User gymnoini1@gmail.com berhasil diautentikasi"}
+{"level":"error","message":"Error pada autentikasi: read ECONNRESET"}
+{"level":"info","message":"User gymnoini1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini1@gmail.com berhasil diautentikasi"}

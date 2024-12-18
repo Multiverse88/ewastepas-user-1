@@ -9,3 +9,5 @@
 {"level":"error","message":"Password tidak valid"}
 {"level":"error","message":"Password tidak valid"}
 {"level":"error","message":"Password tidak valid"}
+{"level":"error","message":"Error pada autentikasi: read ECONNRESET"}
+{"level":"error","message":"Error pada autentikasi: read ECONNRESET"}

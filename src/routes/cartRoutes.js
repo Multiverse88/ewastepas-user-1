@@ -9,5 +9,7 @@ router.post('/decrease', authenticate,cartController.decreaseItem);
 router.get('/view', authenticate, cartController.viewCart);
 router.delete('/delete', authenticate, cartController.deleteItem);
 router.get('/getPickupId', authenticate, cartController.getPickupId);
+router.get('/checkout', authenticate, cartController.getCheckoutDetails);
+router.put('/schedule', authenticate, cartController.schedulePickup);
 
 module.exports = router;
