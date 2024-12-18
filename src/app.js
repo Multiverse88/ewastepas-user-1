@@ -10,6 +10,7 @@ const { logger, checkApiKey, errorHandler } = require('./middleware/apiMiddlewar
 const penjemputanRoutes = require('./routes/penjemputanRoutes');
 const apiKeyRoutes = require('./routes/apiKeyRoutes');
 const cartRoutes = require('./routes/cartRoutes');
+const pickupRoutes = require('./routes/pickupRoutes');
 const app = express();
 
 // Test database connection
@@ -33,6 +34,7 @@ app.use('/api', penjemputanRoutes);
 app.use('/api', wasteRoutes);
 // app.use('/api/cart', cartRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/pickup', pickupRoutes);
 app.use((req, res) => {
   res.status(404).json({ error: 'Not Found' });
 });

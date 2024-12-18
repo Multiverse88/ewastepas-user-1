@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const PenjemputanController = require('../controllers/penjemputanController');
+const pickupController = require('../controllers/pickupController');
 
-router.post('/penjemputan', PenjemputanController.tambahPenjemputan);
-router.get('/penjemputan', PenjemputanController.getAllPenjemputan);
-router.get('/penjemputan/:id', PenjemputanController.getPenjemputan);
-router.put('/penjemputan/:id/status-penjemputan', PenjemputanController.updateStatusPenjemputan);
-router.put('/penjemputan/:id/status-pengiriman', PenjemputanController.updateStatusPengiriman);
-router.delete('/penjemputan/:id', PenjemputanController.deletePenjemputan);
-router.get('/penjemputan/user/:idUser', PenjemputanController.getPenjemputanByUser);
-router.get('/penjemputan/dropbox/:idDropbox', PenjemputanController.getPenjemputanByDropbox);
+// Get pickup by ID
+router.get('/pickup/:pickup_id', pickupController.getPickupById);
+
+// Update delivery status
+router.put('/pickup/status', pickupController.updateDeliveryStatus);
+
+// Get pickups by status
+router.get('/pickup/by-status', pickupController.getPickupsByStatus);
 
 module.exports = router;
