@@ -1,0 +1,76 @@
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"error","message":"Error: secretOrPrivateKey must have a value"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"info","message":"Login berhasil"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"info","message":"Login berhasil"}
+{"level":"error","message":"Error pada autentikasi: Cannot read properties of undefined (reading 'auth_token')"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"error","message":"Password tidak valid"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"info","message":"Login berhasil"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"info","message":"Login berhasil"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"error","message":"Error pada autentikasi: Cannot read properties of undefined (reading 'auth_token')"}
+{"level":"error","message":"Error pada autentikasi: Cannot read properties of undefined (reading 'auth_token')"}
+{"level":"error","message":"Error pada autentikasi: Cannot read properties of undefined (reading 'auth_token')"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"error","message":"Error pada autentikasi: Cannot read properties of undefined (reading 'auth_token')"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"error","message":"Password tidak valid"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"error","message":"Password tidak valid"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"error","message":"Password tidak valid"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"info","message":"Login berhasil"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"info","message":"Login berhasil"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"error","message":"Password tidak valid"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"info","message":"Login berhasil"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"info","message":"Login berhasil"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"error","message":"Error pada autentikasi: read ECONNRESET"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User wsasda1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"POST /api/auth/login - IP: ::1"}
+{"level":"info","message":"Login berhasil"}
+{"level":"info","message":"User gymnoini1@gmail.com berhasil diautentikasi"}
+{"level":"error","message":"Error pada autentikasi: read ECONNRESET"}
+{"level":"info","message":"User gymnoini1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini1@gmail.com berhasil diautentikasi"}
+{"level":"info","message":"User gymnoini1@gmail.com berhasil diautentikasi"}

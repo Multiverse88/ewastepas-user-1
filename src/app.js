@@ -11,7 +11,11 @@ const penjemputanRoutes = require('./routes/penjemputanRoutes');
 const apiKeyRoutes = require('./routes/apiKeyRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const pickupRoutes = require('./routes/pickupRoutes');
+const authRoutes = require('./routes/authRoutes');
 const app = express();
+
+// Tambahkan ini sebelum middleware lainnya
+app.set('trust proxy', 1); // Penting! Tambahkan ini untuk Vercel
 
 // Test database connection
 testConnection();
@@ -34,7 +38,6 @@ app.use('/api', penjemputanRoutes);
 app.use('/api', wasteRoutes);
 // app.use('/api/cart', cartRoutes);
 app.use('/api/cart', cartRoutes);
-app.use('/api/pickup', pickupRoutes);
 app.use((req, res) => {
   res.status(404).json({ error: 'Not Found' });
 });

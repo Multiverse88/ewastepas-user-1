@@ -1,0 +1,13 @@
+{"level":"error","message":"Error: secretOrPrivateKey must have a value"}
+{"level":"error","message":"Error pada autentikasi: Cannot read properties of undefined (reading 'auth_token')"}
+{"level":"error","message":"Password tidak valid"}
+{"level":"error","message":"Error pada autentikasi: Cannot read properties of undefined (reading 'auth_token')"}
+{"level":"error","message":"Error pada autentikasi: Cannot read properties of undefined (reading 'auth_token')"}
+{"level":"error","message":"Error pada autentikasi: Cannot read properties of undefined (reading 'auth_token')"}
+{"level":"error","message":"Error pada autentikasi: Cannot read properties of undefined (reading 'auth_token')"}
+{"level":"error","message":"Password tidak valid"}
+{"level":"error","message":"Password tidak valid"}
+{"level":"error","message":"Password tidak valid"}
+{"level":"error","message":"Password tidak valid"}
+{"level":"error","message":"Error pada autentikasi: read ECONNRESET"}
+{"level":"error","message":"Error pada autentikasi: read ECONNRESET"}
