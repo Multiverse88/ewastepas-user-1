@@ -5,7 +5,10 @@ const dbConfig = {
   user: process.env.DB_USER || 'haikal', // Sesuaikan dengan username MySQL Anda
   password: process.env.DB_PASSWORD || 'My$ecureP@ssw0rd123', // Sesuaikan dengan password MySQL Anda
   database: process.env.DB_NAME || 'hikel_lila', // Pastikan nama database ini benar
-  connectionLimit: 10
+  connectionLimit: 10,
+  connectTimeout: 10000, // 10 seconds
+  waitForConnections: true,
+  debug: true // This will help with debugging
 };
 
 const pool = mysql.createPool(dbConfig);
