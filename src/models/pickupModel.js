@@ -172,6 +172,59 @@ class PickupModel {
         throw error;
     }
   }
+
+  static async getCourierInfo(pickup_id) {
+    try {
+        const query = `
+            SELECT 
+                c.courier_id,
+                c.name,
+                c.phone,
+                c.photo,
+                pw.pickup_status
+            FROM pickup_waste pw
+            LEFT JOIN courier c ON pw.courier_id = c.courier_id
+            WHERE pw.pickup_id = ?
+        `;
+
+        const [rows] = await pool.query(query, [pickup_id]);
+        
+        if (rows.length === 0) {
+            throw new Error('Pickup not found');
+        }
+
+        return rows[0];
+    } catch (error) {
+        console.error('Error in getCourierInfo:', error);
+        throw error;
+    }
+  }
+
+  static async getPickupAddress(pickup_id) {
+    try {
+        console.log('Getting address for pickup_id:', pickup_id);
+
+        const query = `
+            SELECT 
+                pickup_id,
+                pickup_address as address
+            FROM pickup_waste
+            WHERE pickup_id = ?
+        `;
+
+        const [rows] = await pool.query(query, [pickup_id]);
+        console.log('Query result:', rows);
+        
+        if (rows.length > 0) {
+            return rows[0];
+        }
+        return null;
+        
+    } catch (error) {
+        console.error('Error in getPickupAddress:', error);
+        throw error;
+    }
+  }
 }
 
 module.exports = PickupModel;
