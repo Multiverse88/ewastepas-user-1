@@ -11,5 +11,6 @@ router.delete('/delete', authenticate, cartController.deleteItem);
 router.get('/getPickupId', authenticate, cartController.getPickupId);
 router.get('/checkout', authenticate, cartController.getCheckoutDetails);
 router.put('/schedule', authenticate, cartController.schedulePickup);
+router.post('/increase-quantity', cartController.increaseQuantity);
 
 module.exports = router;

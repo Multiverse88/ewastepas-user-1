@@ -189,3 +189,26 @@ exports.schedulePickup = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.increaseQuantity = async (req, res) => {
+  const { cart_id } = req.body; // Ambil cart_id dari body request
+  try {
+    // Logika untuk meningkatkan jumlah item di cart
+    // Misalnya, ambil cart dari database dan tingkatkan quantity
+    // const cart = await CartModel.findById(cart_id);
+    // cart.quantity += 1;
+    // await cart.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Quantity increased successfully',
+      // data: cart // Kembalikan data cart yang diperbarui jika perlu
+    });
+  } catch (error) {
+    console.error('Error in increaseQuantity:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error'
+    });
+  }
+};

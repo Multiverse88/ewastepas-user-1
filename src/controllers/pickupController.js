@@ -252,6 +252,30 @@ class PickupController {
             });
         }
     }
+
+    async getPickupAddress(req, res) {
+        const { pickup_id } = req.query;
+        try {
+            const pickupAddress = await PickupModel.getPickupAddress(pickup_id);
+            if (!pickupAddress) {
+                return res.status(404).json({
+                    success: false,
+                    error: 'Pickup not found'
+                });
+            }
+            res.status(200).json({
+                success: true,
+                data: pickupAddress
+            });
+        } catch (error) {
+            console.error('Error in getPickupAddress:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Internal server error',
+                message: error.message
+            });
+        }
+    }
 }
 
 module.exports = new PickupController();
