@@ -230,6 +230,28 @@ class PickupController {
             });
         }
     }
+
+    async getCourierInfo(req, res) {
+        const { pickup_id } = req.params;
+        
+        try {
+            const courierInfo = await PickupModel.getCourierInfo(pickup_id);
+            
+            if (!courierInfo.courier_id) {
+                return res.status(404).json({ 
+                    error: 'No courier assigned to this pickup yet'
+                });
+            }
+
+            res.status(200).json(courierInfo);
+        } catch (error) {
+            console.error('Error getting courier info:', error);
+            res.status(500).json({ 
+                error: 'Failed to get courier information',
+                details: error.message 
+            });
+        }
+    }
 }
 
 module.exports = new PickupController();

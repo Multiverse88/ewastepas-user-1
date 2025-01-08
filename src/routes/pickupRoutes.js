@@ -14,4 +14,8 @@ router.delete('/:pickup_id', pickupController.deletePickup);
 router.get('/details/:pickup_id', pickupController.getPickupDetails);
 router.get('/details', pickupController.getAllPickupDetails);
 
+router.get('/courier-info/:pickup_id', pickupController.getCourierInfo);
+
+router.get('/info', pickupController.getPickupAddress);
+
 module.exports = router;
